@@ -8,19 +8,17 @@ import logging
 import argparse
 import requests
 import coloredlogs
-from dotenv import load_dotenv
+
 from netaddr import IPNetwork
 from time import perf_counter, sleep
-
-load_dotenv()
 
 __author__ = 'ppiper'
 s = None
 url = ''
-ibx_grid_master = os.getenv('ibx_gridmaster')
-ibx_username = os.getenv('ibx_username')
-ibx_password = os.getenv('ibx_password')
-ibx_wapi_version = os.getenv('ibx_wapi_version')
+ibx_grid_master = '192.168.1.2'
+ibx_username = 'admin'
+ibx_password = 'infoblox'
+ibx_wapi_version = 'v2.11'
 
 log_level = logging.DEBUG
 log_format = '%(asctime)s %(levelname)s %(message)s'
