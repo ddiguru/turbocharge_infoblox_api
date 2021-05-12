@@ -35,6 +35,13 @@ as follows:
    pip install -r requirements.txt
    </pre>
 
+NOTE: you should update the following variables in the scripts:
+
+* ibx_grid_master - the IP or hostname of the Grid Master
+* ibx_username - the Infoblox admin user to authenticate
+* ibx_password - the Infoblox user's password
+* ibx_wapi_version - the WAPI version string should be of the form 'v2.11'
+
 ## The scripts
 
 * wapi-grid.py - A simple script which creates an infinite loop to fetch the WAPI grid object.
