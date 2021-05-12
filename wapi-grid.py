@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import requests
-from time import sleep
 import urllib3
 import logging
+import requests
+from time import sleep
 
 logging.basicConfig(level=logging.DEBUG)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
