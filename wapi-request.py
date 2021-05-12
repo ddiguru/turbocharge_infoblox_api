@@ -8,7 +8,6 @@ import logging
 import argparse
 import requests
 import coloredlogs
-from dotenv import load_dotenv
 from netaddr import IPNetwork
 from time import perf_counter, sleep
 
