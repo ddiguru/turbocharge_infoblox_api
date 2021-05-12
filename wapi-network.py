@@ -13,13 +13,10 @@ from netaddr import IPNetwork
 from time import perf_counter, sleep
 
 __author__ = 'ppiper'
-ibx_grid_master = '192.168.1.2'
+ibx_grid_master = '192.168.40.58'
 ibx_username = 'admin'
 ibx_password = 'infoblox'
 ibx_wapi_version = 'v2.11'
-ip_block = '10.0.0.0/8'
-cidr = 24
-num_of_networks = 1024
 log_level = logging.DEBUG
 log_format = '%(asctime)s %(levelname)s %(message)s'
 logger = logging.getLogger()
@@ -32,8 +29,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 def get_nets():
-    base_network = IPNetwork(ip_block)
-    subnets = list(base_network.subnet(cidr, count=num_of_networks))
+    base_network = IPNetwork('10.0.0.0/8')
+    subnets = list(base_network.subnet(24, count=1024))
     return subnets
 
 
@@ -49,7 +46,7 @@ def main():
 
     # create IPv4 Network object(s) one at a time
     for network in networks:
-        payload = dict(network=network, comment='test-network')
+        payload = dict(network=str(network), comment='test-network')
         s.post(f'{url}/network', data=json.dumps(payload), verify=False)
     
     t1_stop = perf_counter()
