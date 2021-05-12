@@ -13,8 +13,6 @@ from netaddr import IPNetwork
 from time import perf_counter, sleep
 
 __author__ = 'ppiper'
-s = None
-url = ''
 ibx_grid_master = '192.168.1.2'
 ibx_username = 'admin'
 ibx_password = 'infoblox'
@@ -29,11 +27,6 @@ coloredlogs.install(
     fmt=log_format
 )
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-def insert_network(network):
-    payload = dict(network=network, comment='test-network')
-    s.post(f'{url}/network', data=json.dumps(payload), verify=False)
 
 
 def get_nets(block='10.0.0.0/8', cidr=24, num_of_networks=1024):
@@ -51,7 +44,6 @@ def get_args():
 
 
 def main():
-    global s, url
     args = get_args()
     ip_block = args.block or '10.0.0.0/8'
     size_of_networks = args.cidr or 24
@@ -65,8 +57,12 @@ def main():
     networks = get_nets(ip_block, size_of_networks, num_of_networks)
 
     t1_start = perf_counter()
+
+    # create IPv4 Network object(s) one at a time
     for network in networks:
-        insert_network(str(network))
+        payload = dict(network=network, comment='test-network')
+        s.post(f'{url}/network', data=json.dumps(payload), verify=False)
+    
     t1_stop = perf_counter()
 
     logger.info('finished!')
