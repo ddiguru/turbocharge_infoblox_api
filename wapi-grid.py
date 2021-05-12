@@ -9,9 +9,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 s = requests.session()
 s.verify = False
-url = 'https://192.168.1.2/wapi/v2.11/grid'
+url = 'https://192.168.40.58/wapi/v2.11/grid'
 
-s.get(url, auth=('admin','infoblox'), verify=False)
+s.get(url, auth=('admin', 'infoblox'), verify=False)
 
 while True:
     s.get(url, verify=False)
