@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import sys
+import urllib3
 from time import perf_counter
 
 import aiohttp
@@ -16,13 +17,12 @@ from netaddr import IPNetwork
 load_dotenv()
 
 __author__ = 'ppiper'
+ibx_grid_master = '192.168.40.58'
+ibx_username = 'admin'
+ibx_password = 'infoblox'
+ibx_wapi_version = 'v2.11'
 s = None
 url = ''
-ibx_grid_master = os.getenv('ibx_gridmaster')
-ibx_username = os.getenv('ibx_username')
-ibx_password = os.getenv('ibx_password')
-ibx_wapi_version = os.getenv('ibx_wapi_version')
-
 log_level = logging.DEBUG
 log_format = '%(asctime)s %(levelname)s %(message)s'
 logger = logging.getLogger()
@@ -31,11 +31,12 @@ coloredlogs.install(
     logger=logger,
     fmt=log_format
 )
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-def get_nets(block='10.0.0.0/8', cidr=24, num_of_networks=1024):
-    base_network = IPNetwork(block)
-    subnets = list(base_network.subnet(cidr, count=num_of_networks))
+def get_nets():
+    base_network = IPNetwork('10.0.0.0/8')
+    subnets = list(base_network.subnet(24, count=1024))
     return subnets
 
 
@@ -53,22 +54,10 @@ async def fetch(session, network):
             logger.error(f'failed to load network {str(network)}')
 
 
-def get_args():
-    parser = argparse.ArgumentParser(description='script description')
-    parser.add_argument('-b', '--block', help='network block in CIDR form to build list from')
-    parser.add_argument('-c', '--cidr', type=int, help='size of networks to build (int)')
-    parser.add_argument('-n', '--number', type=int, help='number of consecutive subnets to create')
-    return parser.parse_args()
-
-
 async def main():
     global s, url
-    args = get_args()
-    ip_block = args.block or '10.0.0.0/8'
-    size_of_networks = args.cidr or 24
-    num_of_networks = args.number or 1024
 
-    networks = get_nets(ip_block, size_of_networks, num_of_networks)
+    networks = get_nets()
 
     url = f'https://{ibx_grid_master}/wapi/{ibx_wapi_version}'
 

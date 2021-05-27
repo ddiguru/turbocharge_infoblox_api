@@ -48,3 +48,4 @@ NOTE: you should update the following variables in the scripts:
 * wapi-network.py - A simple synchronous WAPI script which inserts 1024 24-bit network objects into the grid
 * wapi-request.py - A WAPI script which inserts 1024 24-bit networks in a single WAPI call using the request object
 * wapi-threaded.py - A WAPI script which leverages concurrency to insert 1024 24-bit networks using threads
+* wapi-async.py - An async WAPI script which uses the aiohttp library to address concurrency
