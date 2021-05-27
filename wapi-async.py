@@ -68,7 +68,7 @@ async def main():
         async with session.get(f'{url}/grid', auth=auth, ssl=False) as res:
             logger.debug(res.status)
             tasks = []
-            sem = asyncio.Semaphore(16)
+            sem = asyncio.Semaphore(8)
             for network in networks:
                 task = asyncio.ensure_future(load_network(sem, session, network))
                 tasks.append(task)
