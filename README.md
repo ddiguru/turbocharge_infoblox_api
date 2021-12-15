@@ -10,29 +10,37 @@ virtual environment or venv. This can be done as follows:
 
 1. Download the content of the repo to a workspace
 
-1. unzip the file from your workspace directory
+2. unzip the file from your workspace directory
 
    <pre>
    unzip turbocharge_infoblox_api.zip
    </pre>
 
-1. create a Python venv
+3. create a Python venv
 
    <pre>
    python3 -m venv turbocharge_infoblox_api
    </pre>
 
-1. launch the virtual environment
+4. launch the virtual environment
 
    <pre>
    cd turbocharge_infoblox_api
    source bin/activate
    </pre>
 
-1. use PIP to install required modules
+5. use `pip` or `poetry` to install required modules
+
+   Example using `pip`:
 
    <pre>
    pip install -r requirements.txt
+   </pre>
+
+   Example using `poetry`:
+   
+   <pre>
+   poetry install
    </pre>
 
 NOTE: you should update the following variables in the scripts:
